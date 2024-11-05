@@ -53,7 +53,7 @@ jobs:
             - name: Build
               run: cargo build
 
-            - name: Install nextest
+            - name: Install `cargo-nextest`
               uses: taiki-e/install-action@nextest
 
             - name: Run tests
