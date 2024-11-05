@@ -1,6 +1,13 @@
 [package]
 name = "pnpid"
-version = "0.1.0"
+description = "a tiny library to map PNP IDs with company/vendor names"
+authors = ["Barrett Ray <contact@barretts.club>"]
+version = "1.0.0"
+repository = "https://github.com/onkoe/pnpid"
+readme = "README.md"
+license-file = "LICENSE"
+keywords = ["pnp", "pnpid"]
+categories = ["hardware-support", "no-std", "no-std::no-alloc"]
 edition = "2021"
 
 [build-dependencies]
