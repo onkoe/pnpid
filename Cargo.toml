@@ -2,7 +2,7 @@
 name = "pnpid"
 description = "a tiny library to map PNP IDs with company/vendor names"
 authors = ["Barrett Ray <contact@barretts.club>"]
-version = "1.0.1"
+version = "1.0.2"
 repository = "https://github.com/onkoe/pnpid"
 readme = "README.md"
 license = "MPL-2.0"
