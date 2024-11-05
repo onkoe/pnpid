@@ -10,6 +10,14 @@ keywords = ["pnp", "pnpid"]
 categories = ["hardware-support", "no-std", "no-std::no-alloc"]
 edition = "2021"
 
+[features]
+default = ["array"]
+## The library will include a list of tuples containing 
+## `(company_id, company_name)`. 
+##
+## You may wish to keep this turned off to avoid bloating your binaries.
+array = []
+
 [build-dependencies]
 csv = "1.3"
 prettyplease = "0.2.25"

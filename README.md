@@ -19,6 +19,10 @@ let name = company_from_pnp_id(id).unwrap();
 assert_eq!(name, "Nasa Ames Research Center");
 ```
 
+## Features
+
+- `array`: Provides a const array of all values in the list. This may bloat binary size, so be sure to remove it on embedded targets where necessary with `cargo add pnpid --no-default-features`.
+
 ## Platform Support
 
 This is a very simple library - anything that can run the internals of `PartialEq` is more than enough. It is also `#![no_std]`, so feel free to use it in fun places. :)

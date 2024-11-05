@@ -17,6 +17,10 @@
 //! assert_eq!(name, "Nasa Ames Research Center");
 //! ```
 //!
+//! ## Features
+//!
+//! - `array`: Provides a const array of all values in the list. This may bloat binary size, so be sure to remove it on embedded targets where necessary with `cargo add pnpid --no-default-features`.
+//!
 //! ## Platform Support
 //!
 //! This is a very simple library - anything that can run the internals of `PartialEq` is more than enough. It is also `#![no_std]`, so feel free to use it in fun places. :)
@@ -39,6 +43,19 @@ include!(concat!(env!("OUT_DIR"), "/pnpid/___pnpid.rs"));
 
 /// The length of the longest company name in the list.
 pub const MAX_LEN: usize = _MAX_LEN;
+
+/// An array of all the companies in the PNP ID registry.
+///
+/// It's in the format `(<pnp id>, <company name>)`.
+///
+/// ## Binary Size
+///
+/// Note that this is a constant array. This means it may bloat your binary
+/// size. Consider turning off the `array` feature if size is important for
+/// project.
+#[cfg(feature = "array")]
+pub const ALL_COMPANIES: [(&str, &str); _NUM_OF_ENTRIES] = _ALL_COMPANIES;
+
 /// Gets a company's name from its PNP ID. The ID must be an uppercase
 /// alphanumeric.
 ///

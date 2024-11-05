@@ -9,6 +9,9 @@ fn main() {
     // make a list of "arms" for the giant match statement
     let mut match_arms = Vec::new();
 
+    // a list of array entries
+    let mut array_entries = Vec::new();
+
     // we keep track of the longest company name
     let mut max_len = 0_usize;
 
@@ -31,6 +34,9 @@ fn main() {
         // add to the list of const match arms
         match_arms.push(quote!(#id => Some(#company),));
 
+        // and to the list of array entries
+        array_entries.push(quote! {(#id, #company),});
+
         // check if we're the longest company so far
         if company.len() > max_len {
             max_len = company.len();
@@ -44,6 +50,21 @@ fn main() {
 
     // remove consecutive duplicates (i'm looking at you, DemoPad Software Ltd!)
     match_arms.dedup_by(|a, b| a.to_string() == b.to_string());
+    #[cfg(feature = "array")]
+    array_entries.dedup_by(|a, b| a.to_string() == b.to_string());
+
+    // grab the length of the list (used to make array constant)
+    let num_of_entries = match_arms.len();
+
+    let array = if cfg!(feature = "array") {
+        quote! {
+            pub(crate) const _ALL_COMPANIES: [(&str, &str); #num_of_entries] = [
+                #(#array_entries)*
+            ];
+        }
+    } else {
+        quote!()
+    };
 
     // this is the final function we'll write to the file.
     //
@@ -51,12 +72,16 @@ fn main() {
     let func = quote! {
         pub(crate) const _MAX_LEN: usize = #max_len;
 
+        pub(crate) const _NUM_OF_ENTRIES: usize = #num_of_entries;
+
         pub(crate) fn _company_from_pnp_id(id: &str) -> Option<&'static str> {
             match id {
                 #(#match_arms)*
                 _ => None,
             }
         }
+
+        #array
     };
 
     let syn_file = syn::parse2(func).expect("func should parse ok");
