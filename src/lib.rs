@@ -37,6 +37,8 @@
 
 include!(concat!(env!("OUT_DIR"), "/pnpid/___pnpid.rs"));
 
+/// The length of the longest company name in the list.
+pub const MAX_LEN: usize = _MAX_LEN;
 /// Gets a company's name from its PNP ID. The ID must be an uppercase
 /// alphanumeric.
 ///

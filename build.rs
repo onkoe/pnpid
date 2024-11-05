@@ -9,6 +9,9 @@ fn main() {
     // make a list of "arms" for the giant match statement
     let mut match_arms = Vec::new();
 
+    // we keep track of the longest company name
+    let mut max_len = 0_usize;
+
     // we'll add a new match line for each row of csv
     for row in rdr.into_deserialize::<Row>().flatten() {
         // destructure
@@ -27,6 +30,11 @@ fn main() {
 
         // add to the list of const match arms
         match_arms.push(quote!(#id => Some(#company),));
+
+        // check if we're the longest company so far
+        if company.len() > max_len {
+            max_len = company.len();
+        }
     }
 
     // make sure the list isn't empty
@@ -41,6 +49,8 @@ fn main() {
     //
     // TODO: you can make a const version of this if you take a byte slice
     let func = quote! {
+        pub(crate) const _MAX_LEN: usize = #max_len;
+
         pub(crate) fn _company_from_pnp_id(id: &str) -> Option<&'static str> {
             match id {
                 #(#match_arms)*
