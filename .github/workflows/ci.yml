@@ -44,6 +44,12 @@ jobs:
                   path: target
                   key: ${{ runner.os }}-cargo-build-target-${{ matrix.toolchain }}-${{ hashFiles('**/Cargo.lock') }}
 
+            - name: Install `cargo-rdme`
+              uses: taiki-e/install-action@cargo-rdme
+
+            - name: Make sure README is up-to-date
+              run: cargo rdme --check
+
             - name: Build
               run: cargo build
 
