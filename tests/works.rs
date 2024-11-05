@@ -120,4 +120,17 @@ mod tests {
         let got = company_from_pnp_id(id).unwrap();
         assert_eq!(name, got);
     }
+
+    /// check the length of the longest element in the list.
+    ///
+    /// make sure the build script's matches the array.
+    #[test]
+    #[cfg(feature = "array")]
+    fn longest_len() {
+        let longest = pnpid::ALL_COMPANIES
+            .iter()
+            .max_by_key(|c| c.1.len())
+            .unwrap();
+        assert_eq!(longest.1.len(), pnpid::MAX_LEN);
+    }
 }
