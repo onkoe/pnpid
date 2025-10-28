@@ -54,7 +54,7 @@ pub const MAX_LEN: usize = _MAX_LEN;
 /// size. Consider turning off the `array` feature if size is important for
 /// project.
 #[cfg(feature = "array")]
-pub const ALL_COMPANIES: [(&str, &str); _NUM_OF_ENTRIES] = _ALL_COMPANIES;
+pub static ALL_COMPANIES: [(&str, &str); _NUM_OF_ENTRIES] = _ALL_COMPANIES;
 
 /// Gets a company's name from its PNP ID. The ID must be an uppercase
 /// alphanumeric.
